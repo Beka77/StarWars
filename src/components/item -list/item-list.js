@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import'./item-list.css'
 
-class ItemList extends Component{
+export default class ItemList extends Component{
     render(  ){
         return(<ul className="Item-list list-group">
             <li className="list-group-item">Luke Skywalker</li>
