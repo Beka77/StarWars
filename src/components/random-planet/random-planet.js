@@ -11,9 +11,9 @@ class RandomPlanet extends Component {
     loading: true,
     error: false,
   };
-  constructor(){
-    super();
+  componentDidMount(){
     this.updatePlanet()
+    this.interval = setInterval(this.updatePlanet,3000)
   }
   onPLanetLoaded = (planet)=>{
     this.setState({planet,
@@ -25,7 +25,7 @@ class RandomPlanet extends Component {
     loading: false,})
   }
 
-  updatePlanet() {
+  updatePlanet =()=> {
     const id = Math.floor(Math.random()*25) + 2;
     this.swapiService
     .getPlanet(id)
@@ -34,6 +34,8 @@ class RandomPlanet extends Component {
   }
 
   render() {
+
+    console.log('render')
     const { planet, loading, error } = this.state;
     const hasData = !(loading || error)
     const errorMessage = error ?<ErrorIndicator/> : null;
@@ -55,9 +57,10 @@ export default RandomPlanet;
 
 const PlanetView = ({planet})=>{
   const {id, name, population, rotationperiod, diameter } = planet;
+
   return  <React.Fragment> <img
   className="planet_image"
-  src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
+  src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg}`}
   alt=""
 />
 
@@ -78,5 +81,6 @@ const PlanetView = ({planet})=>{
       <span>{diameter}</span>
     </li>
   </ul>
+  <button className="btn-warning">Toggle random planet</button>
 </div> </React.Fragment>
 }

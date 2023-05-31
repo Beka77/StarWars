@@ -4,13 +4,13 @@ export default class SwapiServices {
     const res = await fetch(`${this._api}${url}`);
     if (!res.ok) {
       throw new Error(
-        `не смогли связаться с сервером ${url}` + ` , получено ${res.status}`
+        `не смогли связаться с сервером ${url}` +  `, получено ${res.status}`
       );
     }
     return await res.json();
   }
   async getAllPeople(){
-    const res = await this.getResourse(`/people/`);
+    const res = await this.getResourse(/people/);
     return res.results.map(this._transformPerson)
   }
   async getPerson(id) {
@@ -38,7 +38,7 @@ export default class SwapiServices {
     const idRegExp = /\/([0-9]*)\/$/
     return item.url.match(idRegExp)[1]
   }
-  _transformPlanet(planet){
+  _transformPlanet =(planet)=>{
     return{
       id: this._extractId(planet),
       name: planet.name,
@@ -46,10 +46,9 @@ export default class SwapiServices {
       rotationperiod: planet.rotation_period,
       diameter: planet.diameter,
     }
-
   }
   
-  _transformStarship(startship){
+  _transformStarship =(startship)=>{
     return{
       id: this._extractId(startship),
       name:startship.name,
@@ -62,7 +61,7 @@ export default class SwapiServices {
       cargoCapacity: startship.cargoCapacity
     }
   }
-  _transformPerson(person){
+  _transformPerson =(person)=>{
     return{
       id:this._extractId(person),
       name: person.name,
