@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import R2d2 from '../img/R2-D2.jpg'
 import "./person-details.css";
 import SwapiServices from "../../fetch";
 
@@ -22,7 +21,7 @@ export default class PersonDetails extends Component {
     })
   }
   componentDidUpdate(prevProps){
-    if(this.props.personId != prevProps.personId){
+    if(this.props.personId !== prevProps.personId){
       this.updatePerson()
     }
   }

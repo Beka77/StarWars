@@ -1,2 +1,2 @@
 import ItemList from "./item-list";
-export default ItemList;
+export default ItemList
