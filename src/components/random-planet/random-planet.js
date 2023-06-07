@@ -13,7 +13,7 @@ class RandomPlanet extends Component {
   };
   componentDidMount(){
     this.updatePlanet()
-    this.interval = setInterval(this.updatePlanet,3000)
+    this.interval = setInterval(this.updatePlanet,15000)
   }
   onPLanetLoaded = (planet)=>{
     this.setState({planet,
@@ -33,8 +33,8 @@ class RandomPlanet extends Component {
     .catch(this.onError);
   }
 
-  render() {
-
+  render(Errorboundry) {
+    <Errorboundry/>
     const { planet, loading, error } = this.state;
     const hasData = !(loading || error)
     const errorMessage = error ?<ErrorIndicator/> : null;

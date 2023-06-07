@@ -2,34 +2,35 @@ import React, { Component } from "react";
 import "./person-details.css";
 import SwapiServices from "../../fetch";
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
   swapiServices = new SwapiServices()
   state={
     person:{},
   }
   componentDidMount(){
-    this.updatePerson();
+    this.updateItem();
   }
-  updatePerson(){
-    const {personId} = this.props;
-    if(!personId){
+  updateItem(){
+    const {itemId, getData} = this.props;
+    if(!itemId){
       return
     }
-    this.swapiServices.getPerson(personId)
+    getData(itemId)
     .then((person)=>{
       this.setState({person})
     })
   }
   componentDidUpdate(prevProps){
-    if(this.props.personId !== prevProps.personId){
-      this.updatePerson()
+    if(this.props.itemId !== prevProps.itemId){
+      this.updateItem()
     }
   }
-  render() {
+  render(Errorboundry) {
     const {person:{id,name,gender,birthYear,eyeColor}}=this.state
     if(!this.state.person){
       return <span>Select a person from list</span>
     }
+    <Errorboundry/>
     return (
       <div className="person-details card">
         <img
