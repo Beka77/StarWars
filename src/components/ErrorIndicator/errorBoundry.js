@@ -1,21 +1,16 @@
 import { Component } from "react";
 import ErrorIndicator from "./errorIndicator";
-
-
-class ErrorBoundry extends Component{
-    state ={
-      hasError:false,
-    }
-    
+export default class ErrorBoundry extends Component {
+    state = {
+      hasError: false,
+    };
     componentDidCatch() {
       this.setState({ hasError: true });
     }
-    render(){
+    render() {
       if (this.state.hasError) {
-        return <ErrorIndicator/>
-        
+        return <ErrorIndicator />;
       }
-      return this.props.renderItem
+      return this.props.renderItem;
     }
   }
-export default ErrorBoundry;

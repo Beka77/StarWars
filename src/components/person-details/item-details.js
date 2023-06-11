@@ -2,58 +2,69 @@ import React, { Component } from "react";
 import "./person-details.css";
 import SwapiServices from "../../fetch";
 
+const Record = ({item, field,label})=>{
+  return <li className="list-group-item">
+  <span className="term">{field}</span>
+  <span>{label}</span>
+</li>
+}
+export {Record}
+
 export default class ItemDetails extends Component {
   swapiServices = new SwapiServices()
   state={
-    person:{},
+    item:{},
+    image: null,
   }
   componentDidMount(){
     this.updateItem();
   }
   updateItem(){
-    const {itemId, getData} = this.props;
+    const {itemId, getData, getImageUrl} = this.props;
     if(!itemId){
       return
     }
     getData(itemId)
-    .then((person)=>{
-      this.setState({person})
+    .then((item)=>{
+      this.setState({item,
+      image: getImageUrl(item)})
     })
   }
   componentDidUpdate(prevProps){
-    if(this.props.itemId !== prevProps.itemId){
-      this.updateItem()
+    if(this.props.itemId != prevProps.itemId){
+      this.updatePerson()
     }
   }
-  render(Errorboundry) {
-    const {person:{id,name,gender,birthYear,eyeColor}}=this.state
-    if(!this.state.person){
+  renDerItems(arr) {
+    return arr.map((item) => {
+      const {fieild,label } = item;
+
+      return (
+        <li className="list-group-item">
+  <span className="term">{fieild}</span>
+  <span>{label}</span>
+</li>
+      );
+    });
+  }
+  render() {
+    const {item,image}=this.state;
+    const {name,gender,birthYear,eyeColor} = item
+    if(!this.state.item){
       return <span>Select a person from list</span>
     }
-    <Errorboundry/>
     return (
+      
       <div className="person-details card">
         <img
           className="person-image"
-          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+          src={image}
           alt=""
         />
         <div className=" card-body">
             <h4>{name}</h4>
             <ul className="list-group list-group-flush">
-                <li className="list-group-item">
-                    <span className="term">Gender</span>
-                    <span>{gender}</span>
-                </li>
-                <li className="list-group-item">
-                    <span className="term">Birth year</span>
-                    <span>{birthYear}</span>
-                </li>
-                <li className="list-group-item">
-                    <span className="term">eye Color</span>
-                    <span>{eyeColor}</span>
-                </li>
-                
+                {this.props.children}                
             </ul>
         </div>
       </div>

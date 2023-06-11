@@ -10,7 +10,7 @@ class RandomPlanet extends Component {
     planet: {},
     loading: true,
     error: false,
-  };
+  }; 
   componentDidMount(){
     this.updatePlanet()
     this.interval = setInterval(this.updatePlanet,15000)
@@ -33,14 +33,15 @@ class RandomPlanet extends Component {
     .catch(this.onError);
   }
 
-  render(Errorboundry) {
-    <Errorboundry/>
+  render() {
+
     const { planet, loading, error } = this.state;
     const hasData = !(loading || error)
     const errorMessage = error ?<ErrorIndicator/> : null;
     const spinner = loading ? <Spinner/>: null;
     const content = hasData ? <PlanetView planet={planet}/> : null;
     return (
+    
       <div className="random-planet jumbotron rounded">
         {
           errorMessage
@@ -48,13 +49,14 @@ class RandomPlanet extends Component {
         {spinner}
         {content}
       </div>
-    );
+
+     );
   }
 }
 
 export default RandomPlanet;
 
-const PlanetView = ({planet})=>{
+const PlanetView = ({planet} )=>{
   const {id, name, population, rotationperiod, diameter } = planet;
 
   return  <React.Fragment> <img
