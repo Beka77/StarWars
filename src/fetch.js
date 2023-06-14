@@ -1,12 +1,12 @@
 export default class SwapiServices {
-  _api = "https://swapi.dev/api/";
+  _api = "https://swapi.dev/api";
   _imageBase = `http://starwars-visualguide.com/assets/img`
   getResourse = async (url) => {
     const res = await fetch(`${this._api}${url}`);
     if (!res.ok) {
       throw new Error(
         `не смогли связаться с сервером ${url}` + ` , получено ${res.status}`
-      );
+        );
     }
     return await res.json();
   };

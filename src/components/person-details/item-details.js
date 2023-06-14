@@ -4,8 +4,8 @@ import SwapiServices from "../../fetch";
 
 const Record = ({item, field,label})=>{
   return <li className="list-group-item">
-  <span className="term">{field}</span>
-  <span>{label}</span>
+  <span className="term">{label}</span>
+  <span>{item[field]}</span>
 </li>
 }
 export {Record}
@@ -31,7 +31,7 @@ export default class ItemDetails extends Component {
     })
   }
   componentDidUpdate(prevProps){
-    if(this.props.itemId != prevProps.itemId){
+    if(this.props.itemId !== prevProps.itemId){
       this.updatePerson()
     }
   }
@@ -49,7 +49,7 @@ export default class ItemDetails extends Component {
   }
   render() {
     const {item,image}=this.state;
-    const {name,gender,birthYear,eyeColor} = item
+    const {name} = item
     if(!this.state.item){
       return <span>Select a person from list</span>
     }
@@ -61,10 +61,12 @@ export default class ItemDetails extends Component {
           src={image}
           alt=""
         />
-        <div className=" card-body">
+        <div className="card-body">
             <h4>{name}</h4>
             <ul className="list-group list-group-flush">
-                {this.props.children}                
+           {React.Children.map(this.props.children, (child)=>{
+              return React.cloneElement(child, {item})
+           })}              
             </ul>
         </div>
       </div>
