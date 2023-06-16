@@ -32,7 +32,7 @@ export default class ItemDetails extends Component {
   }
   componentDidUpdate(prevProps){
     if(this.props.itemId !== prevProps.itemId){
-      this.updatePerson()
+      this.updateItem()
     }
   }
   renDerItems(arr) {

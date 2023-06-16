@@ -17,5 +17,8 @@ const ItemList = (props) => {
   });
   return <ul className="Item-list list-group">{items}</ul>;
 };
+ItemList.defaultProps = {
+  onitemselected: ()=>{}
+}
 
 export default ItemList;
