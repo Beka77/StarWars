@@ -1,22 +1,17 @@
 import { Component } from "react";
+import { PersonList,PersonDetails } from "../sw_components";
 import Row from "../row/row";
-import { PersonDetails, PersonList } from "../sw_components";
 export default class PeoplePage extends Component {
-  state = {
-    selectedItem: null,
-    hasError: false,
-  };
-
-  onItemSelected = (selectedItem) => {
-    this.setState({ selectedItem });
-  };
+  // state = {
+  //   selectedItem: null,
+  // };
+  // onItemSelected = (selectedItem) => {
+  //   this.setState({ selectedItem });
+  // };
   render() {
-    const { selectedItem } = this.state;
+   const {selectedItem, onitemselected} = this.props
     return (
-      <Row
-        left={<PersonList />}
-        rigth={<PersonDetails itemId={11} />}
-      />
+      <Row left={<PersonList onitemselected = {onitemselected} />} rigth={<PersonDetails itemId={selectedItem} />} />
     );
   }
 }

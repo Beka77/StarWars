@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import "./app.css";
-import { Component } from "react";
 import Header from "../header/header";
 import SwapiServices from "../../fetch";
-import { SwapiServiceProvider } from "../swapi-services";
+import { SwapiServiceProvider } from "../swapi-services-context";
 import RandomPlanet from "../random-planet/random-planet";
-import Row from "../row/row";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   PersonDetails,
   PersonList,
@@ -14,9 +13,9 @@ import {
   StarshipDetails,
   StarshipList,
 } from "../sw_components";
+import Row from "../row/row";
 import PeoplePage from "../pages/peoplePage";
-import StarshipPage from "../pages/starshipPage";
-import PlanetPage from "../pages/planetPage";
+
 export default class App extends Component {
   swapiServices = new SwapiServices();
   state = {
@@ -24,6 +23,7 @@ export default class App extends Component {
     hasError: false,
     showRandomPlanet: true,
   };
+
   componentDidCatch() {
     console.log("componentDidCatch");
     this.setState({ hasError: true });
@@ -32,23 +32,43 @@ export default class App extends Component {
     this.setState({ selectedItem });
   };
   render() {
-    const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
+    // const planet = this.state.showRandomPlanet ? <RandomPlanet updateInterval ={20000} /> : null;
+
+    // const starShipDetails = (
+    //   <ItemDetails
+    //     itemId={5}
+    //     getData={getStarship}
+    //     getImageUrl={getStarshipimage}
+    //   >
+    //     <Record field="madel" label="Model" />
+    //     <Record field="length" label="Length" />
+    //   </ItemDetails>
+    // );
     return (
       <SwapiServiceProvider value={this.swapiServices}>
-        <div className="App">
-          <Header />
-          {planet}
-          <PeoplePage />
-          <StarshipPage />
-          <PlanetPage />
+        <BrowserRouter>
+          <div className="App">
+            <Header />
+            <RandomPlanet updateInterval={20000} />
+            <Routes>  
+              <Route path="/" 
+              render={()=><h2>Welcome to StarWars page </h2>} 
+              exact/>
+              <Route path="/people" element={<PeoplePage />} />
+              <Route
+                path="/people/:id"
+                element= {<PersonDetails itemId={this.state.selectedItem} />
+                }
+              />
+
+              <Route path="/starships" element={<PeoplePage />} />
+              <Route path="/planets" element={<PeoplePage />} />
+            </Routes>
+            {/* <PeoplePage/>
           <Row left={<PlanetList />} rigth={<PlanetDetails itemId={11} />} />
-          <Row
-            left={<StarshipList />}
-            rigth={<StarshipDetails itemId={11} />}
-          />
-          <PlanetDetails itemId={5} />
-          <StarshipDetails itemId={9} />
-        </div>
+          <Row left={<StarshipList />} rigth={<StarshipDetails itemId={9} />} /> */}
+          </div>
+        </BrowserRouter>
       </SwapiServiceProvider>
     );
   }
